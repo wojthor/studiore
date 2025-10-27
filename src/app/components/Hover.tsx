@@ -2,30 +2,54 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 
-export function HoverOrganizacja() {
-  const [page, setPage] = useState(0);
+/* ---------------------- HEADER ---------------------- */
+function HeaderRow({
+  showIcon,
+  title,
+  alignEndOnDesktop = true,
+}: {
+  showIcon: boolean;
+  title: string[];
+  alignEndOnDesktop?: boolean;
+}) {
+  return showIcon ? (
+    <div
+      className={`flex flex-row items-center ${
+        alignEndOnDesktop ? "justify-end" : "justify-start"
+      }`}
+    >
+      <div className="w-9 h-6 justify-center items-center flex">
+        <img
+          src="/ReIconBlue.svg"
+          className="w-8 h-8 md:w-10 md:h-10 justify-center items-center object-contain"
+        />
+      </div>
+      <div className="pt-1 text-zinc-800 text-2xl md:text-3xl font-light font-['Syne']">
+        {title[0]}
+      </div>
+    </div>
+  ) : (
+    <div className="flex flex-row">
+      <div className="w-9 h-6 justify-start items-start flex" />
+    </div>
+  );
+}
 
-  const pages = [
-    "Organizacja: Nasz zespół skupia się na efektywnym zarządzaniu projektem, dbając o każdy etap realizacji. Dzięki sprawnej komunikacji i jasno określonym celom zapewniamy płynność działań oraz wysoką jakość usług.",
-    "Proces organizacyjny: Współpracujemy z klientem na każdym etapie, od koncepcji po finalizację projektu. Nasze doświadczenie pozwala nam przewidywać wyzwania i szybko na nie reagować, gwarantując terminowość oraz satysfakcję.",
-    "Podsumowanie organizacji: Stawiamy na transparentność, zaangażowanie i profesjonalizm. Dzięki temu budujemy trwałe relacje z klientami i realizujemy projekty zgodnie z najwyższymi standardami branżowymi.",
-  ];
-
-  const handleNext = () => {
-    setPage((prev) => Math.min(prev + 1, pages.length - 1));
-  };
-
-  const handlePrev = () => {
-    setPage((prev) => Math.max(prev - 1, 0));
-  };
-
+/* ------------------- BORDER DRAW SHELL ------------------- */
+export function BorderDrawShell({
+  children,
+  isOpen,
+}: {
+  children: React.ReactNode;
+  isOpen: boolean;
+}) {
   return (
-    <div className="relative  justify-center items-center w-full h-full z-50">
-      {/* BLUR TŁO */}
+    <div className="relative w-full h-full z-50">
+      {/* TŁO */}
       <div
-        className="absolute justify-center items-center inset-0 backdrop-blur-md bg-white/70 z-0"
+        className="absolute inset-0 backdrop-blur-md bg-white/70 z-0"
         style={{
           willChange: "opacity, transform, backdrop-filter",
           backfaceVisibility: "hidden",
@@ -34,401 +58,414 @@ export function HoverOrganizacja() {
         }}
       />
 
+      {/* BORDER DRAW */}
+      <div className="pointer-events-none absolute inset-0 z-10">
+        {/* pion lewy */}
+        <div
+          className={[
+            "absolute left-0 top-0 h-full w-px bg-black origin-top",
+            "transition-all  will-change-transform",
+            isOpen
+              ? "scale-y-100 duration-2000  IDZIE"
+              : "scale-y-0 delay-1300 duration-3000 WRACA",
+          ].join(" ")}
+        />
+        {/* poziom dolny */}
+        <div
+          className={[
+            "absolute left-0 bottom-0 w-full h-px bg-black origin-left",
+            "transition-transform  will-change-transform",
+            isOpen
+              ? "scale-x-100 delay-1500  duration-1500 IDZIE "
+              : "scale-x-0  duration-1500 WRACA",
+          ].join(" ")}
+        />
+      </div>
+
       {/* TREŚĆ */}
-      <div className="relative z-10 w-full h-full justify-between     border-l border-b border-l-black border-b-black shadow-lg p-6 flex flex-col ">
-        {/* Tekst strony */}
-
-        <div className="w-full gap-3   flex-col flex overflow-hidden justify-end items-end">
-          {page === 1 || page === 2 ? (
-            <div className="flex flex-row">
-              <div className="w-9 h-6 justify-start items-start flex">
-                <img
-                  src="/ReIconBlue.svg"
-                  className="w-10 h-10 object-contain"
-                />
-              </div>
-              <div className="justify-end pt-1 items-end text-zinc-800 text-3xl font-light font-['Syne']">
-                socjalizacja
-              </div>
-            </div>
-          ) : null}
-
-          {page === 0 ? (
-            <div className="flex flex-row">
-              <div className="w-9 h-6 justify-start items-start flex"></div>
-            </div>
-          ) : null}
-
-          {page === 0 ? (
-            <p className="text-neutral-700 text-start transition-opacity duration-300">
-              {pages[page]}
-            </p>
-          ) : (
-            <p className="text-neutral-700 text-end transition-opacity duration-300">
-              {pages[page]}
-            </p>
-          )}
-        </div>
-
-        {/* Nawigacja i kontrolki */}
-        <div className="flex flex-row justify-center items-center gap-4 mt-15">
-          {/* Wskaźnik stron */}
-
-          {/* Przyciski: Wstecz / Dalej */}
-          <div className="flex gap-6">
-            {/* Wstecz */}
-            <button
-              onClick={handlePrev}
-              disabled={page === 0}
-              className={`w-14 h-14 bg-orange-600 rounded-full flex items-center justify-center shadow-md transition ${
-                page === 0 ? "opacity-0 cursor-not-allowed" : "hover:scale-105"
-              }`}
-            >
-              <svg
-                className="w-6 h-6 text-white -rotate-180"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-
-            {/* Dalej */}
-          </div>
-
-          <div className="flex ">
-            {pages.map((_, i) => (
-              <div
-                key={i}
-                className={`h-0.5 ${
-                  i === page ? "bg-orange-600 w-10" : "bg-neutral-700 w-10"
-                } transition-all`}
-              />
-            ))}
-          </div>
-          <div className="flex gap-6">
-            <button
-              onClick={handleNext}
-              disabled={page === pages.length - 1}
-              className={`w-14 h-14 bg-orange-600 rounded-full flex items-center justify-center shadow-md transition ${
-                page === pages.length - 1
-                  ? "opacity-0 cursor-not-allowed"
-                  : "hover:scale-105"
-              }`}
-            >
-              <svg
-                className="w-6 h-6 text-white rotate-360"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
+      <div
+        className={`relative z-20 w-full h-full p-4 md:p-6 flex flex-col justify-between
+    transition-[box-shadow] duration-300 ease-in-out
+    ${isOpen ? "shadow-lg delay-0" : "shadow-none delay-1500"}`}
+      >
+        {children}
       </div>
     </div>
   );
 }
 
-type HoverProps = {
-  isOpen: boolean;
-};
+/* ------------------------- ORGANIZACJA ------------------------- */
+export function HoverOrganizacja({ isOpen }: { isOpen: boolean }) {
+  const [page, setPage] = useState(0);
+
+  const pages = useMemo(
+    () => [
+      {
+        title: [""],
+        description:
+          "Odzyskanie porządku i lekkości w codziennym życiu wydaje ci się niemożliwe? Dzięki usłudze declutteringu zorganizujemy Twoją przestrzeń tak, by była funkcjonalna, estetyczna i wolna od nadmiaru. Szafy, kuchnie, całe mieszkania – każde miejsce może oddychać na nowo. Zacznij od porządku i poczuj różnicę. Poznaj nasze warianty dostosowane do twoich potrzeb.",
+      },
+      {
+        title: ["start"],
+        description:
+          "Proces organizacyjny: Współpracujemy z klientem na każdym etapie, od koncepcji po finalizację projektu. Nasze doświadczenie pozwala nam przewidywać wyzwania i szybko na nie reagować, gwarantując terminowość oraz satysfakcję.",
+      },
+      {
+        title: ["claim"],
+        description:
+          "Podsumowanie organizacji: Stawiamy na transparentność, zaangażowanie i profesjonalizm. Dzięki temu budujemy trwałe relacje z klientami i realizujemy projekty zgodnie z najwyższymi standardami branżowymi.",
+      },
+    ],
+    []
+  );
+
+  useEffect(() => {
+    if (isOpen) setPage(0);
+  }, [isOpen]);
+
+  const handleNext = useCallback(
+    () => setPage((prev) => Math.min(prev + 1, pages.length - 1)),
+    [pages.length]
+  );
+  const handlePrev = useCallback(
+    () => setPage((prev) => Math.max(prev - 1, 0)),
+    []
+  );
+
+  const showIcon = page === 1 || page === 2;
+
+  return (
+    <BorderDrawShell isOpen={isOpen}>
+      <section
+        role="region"
+        aria-live="polite"
+        className="w-full gap-3 flex flex-col overflow-hidden"
+      >
+        <HeaderRow showIcon={showIcon} title={pages[page].title} />{" "}
+        <p
+          className={`text-neutral-700 transition-opacity duration-300 text-sm leading-relaxed md:text-base ${
+            page === 0 ? "text-start" : "md:text-end"
+          }`}
+        >
+          {pages[page].description}
+        </p>
+      </section>
+
+      {/* Nawigacja */}
+      <div className="flex flex-row justify-between items-center gap-4 mt-6">
+        <div className="flex gap-6">
+          <button
+            onClick={handlePrev}
+            disabled={page === 0}
+            className={`w-14 h-14 bg-orange-600 rounded-full flex items-center justify-center shadow-md transition ${
+              page === 0 ? "opacity-0 cursor-not-allowed" : "hover:scale-105"
+            }`}
+          >
+            <svg
+              className="w-6 h-6 text-white -rotate-180"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <div className="flex z-10 ">
+          {pages.map((_, i) => (
+            <div
+              key={i}
+              className={`h-0.5 ${
+                i === page ? "bg-orange-600 w-10" : "bg-neutral-700 w-10"
+              } transition-all`}
+            />
+          ))}
+        </div>
+
+        <div className="flex gap-6">
+          <button
+            onClick={handleNext}
+            disabled={page === pages.length - 1}
+            className={`w-14 h-14 bg-orange-600 rounded-full flex items-center justify-center shadow-md transition ${
+              page === pages.length - 1
+                ? "opacity-0 cursor-not-allowed"
+                : "hover:scale-105"
+            }`}
+          >
+            <svg
+              className="w-6 h-6 text-white rotate-360"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </BorderDrawShell>
+  );
+}
+
+/* ------------------------- ARANŻACJA ------------------------- */
+type HoverProps = { isOpen: boolean };
 
 export function HoverAranzacja({ isOpen }: HoverProps) {
   const [page, setPage] = useState(0);
 
-  const pages = [
-    "Aranżacja wnętrz: Tworzymy przestrzenie, które łączą funkcjonalność z estetyką. Każdy projekt jest indywidualnie dopasowany do potrzeb klienta, uwzględniając najnowsze trendy oraz ergonomię.",
-    "Proces aranżacji: Analizujemy oczekiwania i styl życia użytkowników, proponując rozwiązania, które podkreślają charakter wnętrza. Dbamy o detale, materiały i spójność kompozycji.",
-    "Efekt końcowy aranżacji: Nasze realizacje wyróżniają się oryginalnością i komfortem. Dzięki kreatywnemu podejściu i doświadczeniu tworzymy miejsca, w których chce się przebywać każdego dnia.",
-  ];
+  const pages = useMemo(
+    () => [
+      {
+        title: [""],
+        description:
+          "Chcesz, aby twoje mieszkanie prezentowało się perfekcyjnie?Oferujemy kompleksową aranżację wnętrz oraz profesjonalny home staging. Niezależnie od tego, czy chcesz stworzyć wymarzoną przestrzeń do życia, czy sprzedać nieruchomość szybciej i z zyskiem – pomożemy Ci wydobyć pełen potencjał każdego wnętrza. Sprawdź, jak duża różnica tkwi w detalach.Poznaj nasze warianty dostosowane do twoich potrzeb.",
+      },
+      {
+        title: ["form"],
+        description:
+          "Proces aranżacji: Analizujemy oczekiwania i styl życia użytkowników, proponując rozwiązania, które podkreślają charakter wnętrza. Dbamy o detale, materiały i spójność kompozycji.",
+      },
+      {
+        title: ["frame"],
+        description:
+          "Efekt końcowy aranżacji: Nasze realizacje wyróżniają się oryginalnością i komfortem. Dzięki kreatywnemu podejściu i doświadczeniu tworzymy miejsca, w których chce się przebywać każdego dnia.",
+      },
+    ],
+    []
+  );
 
-  const handleNext = () => {
-    setPage((prev) => Math.min(prev + 1, pages.length - 1));
-  };
+  useEffect(() => {
+    if (isOpen) setPage(0);
+  }, [isOpen]);
 
-  const handlePrev = () => {
-    setPage((prev) => Math.max(prev - 1, 0));
-  };
+  const handleNext = useCallback(
+    () => setPage((prev) => Math.min(prev + 1, pages.length - 1)),
+    [pages.length]
+  );
+  const handlePrev = useCallback(
+    () => setPage((prev) => Math.max(prev - 1, 0)),
+    []
+  );
+
+  const showIcon = page === 1 || page === 2;
 
   return (
-    <div className="relative w-full z-50 h-full ">
-      {/* BLUR TŁO */}
-      <div
-        className="absolute inset-0 backdrop-blur-md bg-white/70 z-0"
-        style={{
-          willChange: "opacity, transform, backdrop-filter",
-          backfaceVisibility: "hidden",
-          WebkitBackfaceVisibility: "hidden",
-          WebkitTransformStyle: "preserve-3d",
-        }}
-      />
-
-      {/* TREŚĆ */}
-      <div
-        className={`relative z-10 w-full h-full border-l border-l-black ${
-          isOpen ? "border-b shadow-lg border-b-black" : ""
-        }  p-6 flex flex-col justify-between`}
+    <BorderDrawShell isOpen={isOpen}>
+      <section
+        role="region"
+        aria-live="polite"
+        className="w-full gap-3 flex flex-col overflow-hidden"
       >
-        {/* Tekst strony */}
+        <HeaderRow showIcon={showIcon} title={pages[page].title} />{" "}
+        {/* reframe */}
+        <p
+          className={`text-neutral-700 transition-opacity duration-300 text-sm leading-relaxed md:text-base ${
+            page === 0 ? "text-start" : "md:text-end"
+          }`}
+        >
+          {pages[page].description}
+        </p>
+      </section>
 
-        <div className="w-full   gap-3 flex-col flex overflow-hidden justify-end items-end">
-          {page === 1 || page === 2 ? (
-            <div className="flex flex-row">
-              <div className="w-9 h-6 justify-start items-start flex">
-                <img
-                  src="/ReIconBlue.svg"
-                  className="w-10 h-10 object-contain"
-                />
-              </div>
-              <div className="justify-end items-end pt-1 text-zinc-800 text-3xl font-light font-['Syne']">
-                mis
-              </div>
-            </div>
-          ) : null}
-
-          {page === 0 ? (
-            <div className="flex flex-row">
-              <div className="w-9 h-6 justify-start items-start flex"></div>
-            </div>
-          ) : null}
-
-          {page === 0 ? (
-            <p className="text-neutral-700 text-start transition-opacity duration-300">
-              {pages[page]}
-            </p>
-          ) : (
-            <p className="text-neutral-700 text-end transition-opacity duration-300">
-              {pages[page]}
-            </p>
-          )}
+      {/* Nawigacja */}
+      <div className="flex flex-row justify-between items-center gap-4 mt-6">
+        <div className="flex gap-6">
+          <button
+            onClick={handlePrev}
+            disabled={page === 0}
+            className={`w-14 h-14 bg-orange-600 rounded-full flex items-center justify-center shadow-md transition ${
+              page === 0 ? "opacity-0 cursor-not-allowed" : "hover:scale-105"
+            }`}
+          >
+            <svg
+              className="w-6 h-6 text-white -rotate-180"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </button>
         </div>
 
-        {/* Nawigacja i kontrolki */}
-        <div className="flex flex-row justify-between items-center gap-4 mt-6">
-          {/* Wskaźnik stron */}
+        <div className="flex z-10 ">
+          {pages.map((_, i) => (
+            <div
+              key={i}
+              className={`h-0.5 ${
+                i === page ? "bg-orange-600 w-10" : "bg-neutral-700 w-10"
+              } transition-all`}
+            />
+          ))}
+        </div>
 
-          {/* Przyciski: Wstecz / Dalej */}
-          <div className="flex gap-6">
-            {/* Wstecz */}
-            <button
-              onClick={handlePrev}
-              disabled={page === 0}
-              className={`w-14 h-14 bg-orange-600 rounded-full flex items-center justify-center shadow-md transition ${
-                page === 0 ? "opacity-0 cursor-not-allowed" : "hover:scale-105"
-              }`}
+        <div className="flex gap-6">
+          <button
+            onClick={handleNext}
+            disabled={page === pages.length - 1}
+            className={`w-14 h-14 bg-orange-600 rounded-full flex items-center justify-center shadow-md transition ${
+              page === pages.length - 1
+                ? "opacity-0 cursor-not-allowed"
+                : "hover:scale-105"
+            }`}
+          >
+            <svg
+              className="w-6 h-6 text-white rotate-360"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              viewBox="0 0 24 24"
             >
-              <svg
-                className="w-6 h-6 text-white -rotate-180"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-
-            {/* Dalej */}
-          </div>
-
-          <div className="flex z-10 ">
-            {pages.map((_, i) => (
-              <div
-                key={i}
-                className={`h-0.5 ${
-                  i === page ? "bg-orange-600 w-10" : "bg-neutral-700  w-10"
-                } transition-all`}
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9 5l7 7-7 7"
               />
-            ))}
-          </div>
-          <div className="flex gap-6">
-            <button
-              onClick={handleNext}
-              disabled={page === pages.length - 1}
-              className={`w-14 h-14 bg-orange-600 rounded-full flex items-center justify-center shadow-md transition ${
-                page === pages.length - 1
-                  ? "opacity-0 cursor-not-allowed"
-                  : "hover:scale-105"
-              }`}
-            >
-              <svg
-                className="w-6 h-6 text-white rotate-360"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-          </div>
+            </svg>
+          </button>
         </div>
       </div>
-    </div>
+    </BorderDrawShell>
   );
 }
 
+/* --------------------------- PROJEKT --------------------------- */
 export function HoverProjekt({ isOpen }: HoverProps) {
   const [page, setPage] = useState(0);
 
-  const pages = [
-    "Projekt: Każdy projekt rozpoczynamy od dogłębnej analizy potrzeb i oczekiwań klienta. Tworzymy koncepcje, które są innowacyjne, funkcjonalne i zgodne z wizją inwestora.",
-    "Etapy projektowania: Pracujemy w oparciu o sprawdzone metody, łącząc kreatywność z techniczną precyzją. Współpracujemy z ekspertami z różnych dziedzin, aby zapewnić kompleksową obsługę.",
-    "Rezultat projektu: Nasze projekty wyróżniają się wysoką jakością wykonania oraz dbałością o szczegóły. Realizujemy zarówno wnętrza mieszkalne, jak i komercyjne, zawsze z myślą o komforcie użytkowników.",
-  ];
+  const pages = useMemo(
+    () => [
+      {
+        title: [""],
+        description:
+          "Marzysz o pięknym, funkcjonalnym wnętrzu, które odzwierciedla Twój charakter? Zaufaj naszemu doświadczeniu i pasji do projektowania. Tworzymy przestrzenie, w których chce się żyć – od pierwszego szkicu po dopracowany detal.  Zrealizuj z nami Twoje pomysly.Poznaj nasze warianty dostosowane do Twoich potrzeb.",
+      },
+      {
+        title: ["shape"],
+        description:
+          "Etapy projektowania: Pracujemy w oparciu o sprawdzone metody, łącząc kreatywność z techniczną precyzją. Współpracujemy z ekspertami z różnych dziedzin, aby zapewnić kompleksową obsługę.",
+      },
+      {
+        title: ["vision"],
+        description:
+          "Rezultat projektu: Nasze projekty wyróżniają się wysoką jakością wykonania oraz dbałością o szczegóły. Realizujemy zarówno wnętrza mieszkalne, jak i komercyjne, zawsze z myślą o komforcie użytkowników.",
+      },
+    ],
+    []
+  );
 
-  const handleNext = () => {
-    setPage((prev) => Math.min(prev + 1, pages.length - 1));
-  };
+  useEffect(() => {
+    if (isOpen) setPage(0);
+  }, [isOpen]);
 
-  const handlePrev = () => {
-    setPage((prev) => Math.max(prev - 1, 0));
-  };
+  const handleNext = useCallback(
+    () => setPage((prev) => Math.min(prev + 1, pages.length - 1)),
+    [pages.length]
+  );
+  const handlePrev = useCallback(
+    () => setPage((prev) => Math.max(prev - 1, 0)),
+    []
+  );
+
+  const showIcon = page === 1 || page === 2;
 
   return (
-    <div className="relative w-full z-50 h-full ">
-      {/* BLUR TŁO */}
-      <div
-        className="absolute inset-0 backdrop-blur-md bg-white/70 z-0"
-        style={{
-          willChange: "opacity, transform, backdrop-filter",
-          backfaceVisibility: "hidden",
-          WebkitBackfaceVisibility: "hidden",
-          WebkitTransformStyle: "preserve-3d",
-        }}
-      />
-
-      {/* TREŚĆ */}
-      <div
-        className={`relative z-10 w-full h-full border-l border-l-black ${
-          isOpen ? "border-b shadow-lg border-b-black" : ""
-        }  p-6 flex flex-col justify-between`}
+    <BorderDrawShell isOpen={isOpen}>
+      <section
+        role="region"
+        aria-live="polite"
+        className="w-full gap-3 flex flex-col overflow-hidden"
       >
-        {/* Tekst strony */}
+        <HeaderRow showIcon={showIcon} title={pages[page].title} />{" "}
+        {/* revision */}
+        <p
+          className={`text-neutral-700 transition-opacity duration-300 text-sm leading-relaxed md:text-base ${
+            page === 0 ? "text-start" : "md:text-end"
+          }`}
+        >
+          {pages[page].description}
+        </p>
+      </section>
 
-        <div className="w-full   gap-3 flex-col flex overflow-hidden justify-end items-end">
-          {page === 1 || page === 2 ? (
-            <div className="flex flex-row">
-              <div className="w-9 h-6 justify-start items-start flex">
-                <img
-                  src="/ReIconBlue.svg"
-                  className="w-10 h-10 object-contain"
-                />
-              </div>
-              <div className="justify-end items-end pt-1 text-zinc-800 text-3xl font-light font-['Syne']">
-                mis
-              </div>
-            </div>
-          ) : null}
-
-          {page === 0 ? (
-            <div className="flex flex-row">
-              <div className="w-9 h-6 justify-start items-start flex"></div>
-            </div>
-          ) : null}
-
-          {page === 0 ? (
-            <p className="text-neutral-700 text-start transition-opacity duration-300">
-              {pages[page]}
-            </p>
-          ) : (
-            <p className="text-neutral-700 text-end transition-opacity duration-300">
-              {pages[page]}
-            </p>
-          )}
+      {/* Nawigacja */}
+      <div className="flex flex-row justify-between items-center gap-4 mt-6">
+        <div className="flex gap-6">
+          <button
+            onClick={handlePrev}
+            disabled={page === 0}
+            className={`w-14 h-14 bg-orange-600 rounded-full flex items-center justify-center shadow-md transition ${
+              page === 0 ? "opacity-0 cursor-not-allowed" : "hover:scale-105"
+            }`}
+          >
+            <svg
+              className="w-6 h-6 text-white -rotate-180"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </button>
         </div>
 
-        {/* Nawigacja i kontrolki */}
-        <div className="flex flex-row justify-between items-center gap-4 mt-6">
-          {/* Wskaźnik stron */}
+        <div className="flex z-10 ">
+          {pages.map((_, i) => (
+            <div
+              key={i}
+              className={`h-0.5 ${
+                i === page ? "bg-orange-600 w-10" : "bg-neutral-700 w-10"
+              } transition-all`}
+            />
+          ))}
+        </div>
 
-          {/* Przyciski: Wstecz / Dalej */}
-          <div className="flex gap-6">
-            {/* Wstecz */}
-            <button
-              onClick={handlePrev}
-              disabled={page === 0}
-              className={`w-14 h-14 bg-orange-600 rounded-full flex items-center justify-center shadow-md transition ${
-                page === 0 ? "opacity-0 cursor-not-allowed" : "hover:scale-105"
-              }`}
+        <div className="flex gap-6">
+          <button
+            onClick={handleNext}
+            disabled={page === pages.length - 1}
+            className={`w-14 h-14 bg-orange-600 rounded-full flex items-center justify-center shadow-md transition ${
+              page === pages.length - 1
+                ? "opacity-0 cursor-not-allowed"
+                : "hover:scale-105"
+            }`}
+          >
+            <svg
+              className="w-6 h-6 text-white rotate-360"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              viewBox="0 0 24 24"
             >
-              <svg
-                className="w-6 h-6 text-white -rotate-180"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-
-            {/* Dalej */}
-          </div>
-
-          <div className="flex z-10 ">
-            {pages.map((_, i) => (
-              <div
-                key={i}
-                className={`h-0.5 ${
-                  i === page ? "bg-orange-600 w-10" : "bg-neutral-700  w-10"
-                } transition-all`}
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9 5l7 7-7 7"
               />
-            ))}
-          </div>
-          <div className="flex gap-6">
-            <button
-              onClick={handleNext}
-              disabled={page === pages.length - 1}
-              className={`w-14 h-14 bg-orange-600 rounded-full flex items-center justify-center shadow-md transition ${
-                page === pages.length - 1
-                  ? "opacity-0 cursor-not-allowed"
-                  : "hover:scale-105"
-              }`}
-            >
-              <svg
-                className="w-6 h-6 text-white rotate-360"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-          </div>
+            </svg>
+          </button>
         </div>
       </div>
-    </div>
+    </BorderDrawShell>
   );
 }
