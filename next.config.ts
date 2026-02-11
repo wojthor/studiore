@@ -11,14 +11,7 @@ const nextConfig: NextConfig = {
 			},
 		],
 	},
-	eslint: {
-		// Ostrzeżenie: To pozwala na build projektu nawet z błędami ESLint.
-		ignoreDuringBuilds: true,
-	},
-	typescript: {
-		// Ostrzeżenie: To pozwala na build projektu nawet z błędami TypeScript.
-		ignoreBuildErrors: true,
-	},
+	
 };
 
 export default nextConfig;
