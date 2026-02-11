@@ -4,263 +4,165 @@
 
 import { useState } from "react";
 import { Syne } from "next/font/google";
-/*
-import Zakladka from "@/app/components/zakladka";
-import {
-  HoverAranzacja,
-  HoverOrganizacja,
-  HoverProjekt,
-} from "@/app/components/Hover";
- */
-import { AboutUsHover } from "@/app/components/AboutUsHover";
-import { ContactHover } from "@/app/components/ContactHover";
-import { Footer } from "@/app/components/Footer";
-import { UpperMenu } from "@/app/components/UpperMenu";
+import { ContactContent } from "@/app/components/ContactHover";
+import NavigationBarMain from "./components/NavigationBarMain";
+import NavigationBarMobile from "./components/NavigationBarMobile";
+import { Footer } from "./components/Footer";
+import { ThreeColumnLandingDesktop, ThreeColumnLandingMobile } from "./test2/page";
 
 const syneFont = Syne({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-syne",
+	subsets: ["latin"],
+	weight: ["400", "700"],
+	variable: "--font-syne",
 });
 
+{
+	/*}
 export default function Home() {
-  /*
-  const [showHoverOrganizacja, setShowHoverOrganizacja] = useState(false);
-  const [showHoverAranzacja, setShowHoverAranzacja] = useState(false);
-  const [showHoverProjekt, setShowHoverProjekt] = useState(false);
-  */
-  const [showAboutUsHover, setShowAboutUsHover] = useState(false);
-  const [isClosingAboutUsHover, setIsClosingAboutUsHover] = useState(false);
-  const [showContactHover, setShowContactHover] = useState(false);
-  const [isClosingContactHover, setIsClosingContactHover] = useState(false);
+	const [showAboutUsHover, setShowAboutUsHover] = useState(false);
+	const [isClosingAboutUsHover, setIsClosingAboutUsHover] = useState(false);
 
-  // --- helpers: animowane zamykanie About/Contact (500ms)
-  const handleCloseAboutUsHover = () => {
-    if (!showAboutUsHover) return;
-    setIsClosingAboutUsHover(true);
-    setTimeout(() => {
-      setShowAboutUsHover(false);
-      setIsClosingAboutUsHover(false);
-    }, 500);
-  };
+	const handleOpenAboutUsHover = () => {
+		setIsClosingAboutUsHover(false);
+		setShowAboutUsHover(true);
+	};
 
-  const handleCloseContactHover = () => {
-    if (!showContactHover) return;
-    setIsClosingContactHover(true);
-    setTimeout(() => {
-      setShowContactHover(false);
-      setIsClosingContactHover(false);
-    }, 500);
-  };
+	const [showContactHover, setShowContactHover] = useState(false);
+	const [isClosingContactHover, setIsClosingContactHover] = useState(false);
 
-  /*
-  const openOrganizacja = () => {
-    setShowHoverOrganizacja(true);
-    setShowHoverAranzacja(false);
-    setShowHoverProjekt(false);
-    handleCloseAboutUsHover();
-    handleCloseContactHover();
-  };
+	const handleOpenContactHover = () => {
+		setIsClosingContactHover(false);
+		setShowContactHover(true);
+		if (showAboutUsHover) handleCloseAboutUsHover();
+	};
 
-  /*
-  const openAranzacja = () => {
-    setShowHoverOrganizacja(false);
-    setShowHoverAranzacja(true);
-    setShowHoverProjekt(false);
-    handleCloseAboutUsHover();
-    handleCloseContactHover();
-  };
+	const handleCloseContactHover = () => {
+		setIsClosingContactHover(true);
+		setTimeout(() => setShowContactHover(false), 1000);
+	};
 
-  /*
-  const openProjekt = () => {
-    setShowHoverOrganizacja(false);
-    setShowHoverAranzacja(false);
-    setShowHoverProjekt(true);
-    handleCloseAboutUsHover();
-    handleCloseContactHover();
-  };
-  */
+	const handleCloseAboutUsHover = () => {
+		setIsClosingAboutUsHover(true);
+		setTimeout(() => setShowAboutUsHover(false), 1000);
+	};
+	return (
+		<div className="h-full w-full">
+			<div className={`relative h-full w-screen overflow-hidden ${syneFont.variable}`}>
+				
+				<div
+					className={`z-10 flex h-full flex-col items-center justify-center gap-5 overflow-hidden font-[Syne] text-[#2E2E2E] md:h-screen md:w-screen md:p-12 ${
+						showAboutUsHover
+							? "opacity-12 bg-white transition-opacity duration-1000"
+							: "bg-white transition-opacity duration-1000"
+					} `}
+				>
+					<div className="relative z-20 flex h-full w-full flex-col overflow-hidden border-gray-300 md:h-full">
+						<div className="relative mx-0 h-full w-full p-1">
+							<div className="block md:hidden">
+								<NavigationBarMobile />
+							</div>
 
-  const openAbout = () => {
-    setShowAboutUsHover(true);
+							<div className="hidden md:block">
+								<NavigationBarMain />
+							</div>
+						</div>
 
-    /*
-    setShowHoverOrganizacja(false);
-    setShowHoverAranzacja(false);
-    setShowHoverProjekt(false);
-    */
-    handleCloseContactHover();
-  };
+						
+						<div className="z-1 absolute bottom-0 left-0 flex items-end">
+							<img
+								src="/logo.svg"
+								alt="Studio Re. Logo"
+								className="z-10 mr-[-20%] h-[500px] w-auto"
+							/>
+							<div className="relative z-0 mb-10 h-[548px] w-auto overflow-hidden bg-white">
+								<video
+									src="/photo.mp4"
+									autoPlay
+									muted
+									loop
+									playsInline
+									className="h-full w-auto max-w-none object-cover"
+								/>
+							</div>
+						</div>
+					</div>
 
-  const openContact = () => {
-    setShowContactHover(true);
-    /*
-    setShowHoverOrganizacja(false);
-    setShowHoverAranzacja(false);
-    setShowHoverProjekt(false);
-    */
-    handleCloseAboutUsHover();
-  };
+					
+				</div>
 
-  const [showUpperMenu, setShowUpperMenu] = useState(false);
-  const [isClosingUpperMenu, setIsClosingUpperMenu] = useState(false);
+				
+				<div
+					className={`absolute -right-2 top-0 z-40 h-full w-1/3 transition-transform duration-1000 ease-in-out ${
+						showAboutUsHover && !isClosingAboutUsHover
+							? "translate-x-0"
+							: "delay-600 translate-x-[100%]"
+					}`}
+				>
+					<div className="relative flex h-full cursor-pointer flex-col">
+						<div className="rotate-270 absolute -left-20 top-40 flex h-32 w-12 cursor-pointer items-center justify-center transition-colors">
+							<button
+								onClick={showAboutUsHover ? handleCloseAboutUsHover : handleOpenAboutUsHover}
+								className={`flex cursor-pointer flex-col items-center transition-transform ${
+									showAboutUsHover
+										? "translate-y-[205%] gap-2 text-xl uppercase tracking-[0.2em] text-[#2E2E2E] transition-colors duration-1000"
+										: "duration-800 gap-2 text-xl uppercase tracking-[0.2em] text-[#2E2E2E] transition-colors"
+								} `}
+							>
+								<div className="h-[1px] w-24 bg-[#2E2E2E]"></div>
+								<p>O nas</p>
+							</button>
+						</div>
+						<div className="z-40 h-full w-full overflow-hidden rounded-l-3xl shadow-lg">
+							<AboutUsContent handleClose={handleCloseAboutUsHover} />
+						</div>
+					</div>
+				</div>
 
-  const handleToggle = () => {
-    if (showUpperMenu) {
-      setIsClosingUpperMenu(true);
-      setTimeout(() => {
-        setShowUpperMenu(false);
-        setIsClosingUpperMenu(false);
-      }, 400); // musi odpowiadać Tailwindowemu duration
-    } else {
-      setShowUpperMenu(true);
-    }
-  };
-
-  return (
-    <div className="w-screen h-screen overflow-hidden md:p-0 md:w-full md:h-full ">
-      <div
-        className={`md:w-screen md:h-screen gap-5 p-8 md:pt-12 md:pl-12 md:pr-12 md:pb-12 justify-center items-center bg-white flex flex-col ${syneFont.variable} text-[#2E2E2E] font-[Syne]`}
-      >
-        <div className="relative md:w-[95%] md:h-full flex flex-col overflow-hidden border-gray-300">
-          {/*KROPKA*/}
-
-          <div className="w-full h-18 absolute z-[100]">
-            <button onClick={handleToggle}>
-              <div
-                className={`w-18 h-18 absolute top-0 transition-all rounded-full bg-orange-600 duration-2000 ease-in-out
-                  
-        ${
-          showUpperMenu && !isClosingUpperMenu
-            ? "left-[calc(100%-4.5rem)]"
-            : "left-0"
-        }`}
-              >
-                <div className="w-18 h-18 flex justify-center items-center">
-                  <svg
-                    className={`w-6 h-6 text-white  ${
-                      showUpperMenu && !isClosingUpperMenu
-                        ? "-rotate-180  "
-                        : "rotate-360 "
-                    }`}
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </button>
-            {showUpperMenu}
-          </div>
-
-          {/* UPPER MENU */}
-          <div
-            className={`flex w-full h-18 bg-white/70 shadow shadow-gray-300/50 justify-center rounded-[100px]
-        transform transition-all duration-2000 ease-in-out relative overflow-hidden z-10
-        ${
-          showUpperMenu && !isClosingUpperMenu
-            ? "translate-x-0"
-            : "-translate-x-full"
-        }`}
-          >
-            <div
-              className={`transition-opacity duration-300 ease-in-out flex w-full
-          ${showUpperMenu && !isClosingUpperMenu ? "" : ""}`}
-            >
-              <UpperMenu />
-            </div>
-          </div>
-
-          {/* AboutUsHover */}
-          <div
-            className={`relative md:absolute md:w-[80%] md:bottom-2/5 md:right-0 md:h-50  md:z-30  transition-transform duration-1000 ease-in-out ${
-              showAboutUsHover && !isClosingAboutUsHover
-                ? "translate-x-0 delay-1000"
-                : "translate-x-[95%] delay-1000"
-            }`}
-          >
-            <AboutUsHover
-              isOpen={showAboutUsHover}
-              onOpen={openAbout}
-              onClose={handleCloseAboutUsHover}
-            />
-          </div>
-
-          {/* ContactHover */}
-          <div
-            className={`md:absolute md:bottom-0  md:right-0 md:w-1/2 md:transition-all duration-1000 md:ease-in-out md:z-3 ${
-              showContactHover && !isClosingContactHover
-                ? "md:translate-y-0 delay-1500  md:pointer-events-auto"
-                : "md:translate-y-[80%] delay-2000 md:pointer-events-auto"
-            }`}
-          >
-            <ContactHover
-              isOpen={showContactHover}
-              onOpen={openContact}
-              onClose={handleCloseContactHover}
-            />
-          </div>
-
-          {/* Logo */}
-          <div className="absolute bottom-0 z-1 left-0">
-            <img src="/logo.svg" className="w-auto h-auto" />
-          </div>
-        </div>
-      </div>
-      <div className="w-full ">
-        <Footer />
-      </div>
-    </div>
-  );
+			
+				<div
+					className={`absolute bottom-0 right-10 z-30 h-[60vh] w-1/3 transition-transform ease-in-out ${
+						showContactHover && !isClosingContactHover
+							? "translate-y-0 duration-1000"
+							: "translate-y-[100%] delay-1000 duration-1000"
+					}`}
+				>
+					<div className="relative flex h-full flex-col">
+						<button
+							onClick={showContactHover ? handleCloseContactHover : handleOpenContactHover}
+							className={`absolute -top-20 right-8 z-0 h-12 w-40 cursor-pointer flex-col items-center justify-center gap-2 rounded-t-xl transition-colors transition-transform ${
+								showContactHover ? "translate-y-100 duration-1000" : "translate-y-0 duration-1000"
+							}`}
+						>
+							<div className="absolute right-0 top-1 h-[1px] w-44 bg-[#2E2E2E]"></div>
+							<span className="absolute right-0 text-xl tracking-widest text-black">KONTAKT</span>
+						</button>
+						<div className="z-40 h-full w-full overflow-hidden rounded-3xl bg-white shadow-2xl">
+							<ContactContent onClose={handleCloseContactHover} />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div
+				className={`relative w-full ${syneFont.variable} ${
+					showAboutUsHover
+						? "opacity-12 transition-opacity duration-1000"
+						: "transition-opacity duration-1000"
+				} font-['Syne']`}
+			>
+				<Footer />
+			</div>
+		</div>
+	);
 }
 
-/*
-<div
-            className="absolute inset-x-0 top-0 
-              flex flex-col gap-10 w-full 
-              md:static md:z-100 md:grid md:grid-cols-3 md:gap-10 md:w-full md:p-0 md:h-24 md:justify-between"
-          >
-            {menuItems.map((item, index) => {
-              const base =
-                "w-full md:w-full bg-white md:h-full border-zinc-800 flex items-center justify-start p-6 cursor-pointer border-l md:border-l";
+*/
+}
 
-              const perIndex = [
-                "z-50 md:border-t-0", // index 0
-                "z-50 ", // index 1
-                "z-90", // index 2
-              ] as const;
-
-              const openFns = [openOrganizacja, openAranzacja, openProjekt];
-
-              return (
-                <div
-                  key={item}
-                  className={`${base} ${perIndex[index] ?? ""}`}
-                  onClick={openFns[index]}
-                >
-                  <Zakladka
-                    text={item}
-                    isOpen={
-                      (index === 0 && showHoverOrganizacja) ||
-                      (index === 1 && showHoverAranzacja) ||
-                      (index === 2 && showHoverProjekt)
-                    }
-                    onClose={() => {
-                      if (index === 0) setShowHoverOrganizacja(false);
-                      if (index === 1) setShowHoverAranzacja(false);
-                      if (index === 2) setShowHoverProjekt(false);
-                    }}
-                  />
-                </div>
-              );
-            })}
-          </div>
-
-          */
+export default function Page() {
+	return (
+		<>
+			<ThreeColumnLandingDesktop />
+			<ThreeColumnLandingMobile />
+		</>
+	);
+}

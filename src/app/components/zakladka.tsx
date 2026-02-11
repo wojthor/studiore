@@ -2,44 +2,35 @@
 /* eslint-disable @next/next/no-img-element */
 
 type ZakladkaProps = {
-  text: string;
-  isOpen?: boolean;
-  onClose?: () => void;
+	text: string;
+	isOpen?: boolean;
+	onClose?: () => void;
 };
 
 export default function Zakladka({ text, isOpen, onClose }: ZakladkaProps) {
-  return (
-    <div className="md:z-50     md:bg-white  flex  justify-between items-center w-full h-full">
-      <div className="flex items-end  ">
-        <img
-          src="/icon.svg"
-          className="w-8 h-8 md:w-12 md:h-12 pb-1 md:pb-2  object-contain"
-        />
-        <div className="text-[#50504F]  text-2xl md:text-4xl pb-0 md:pb-1 font-['Syne']">
-          <p>{text}</p>
-        </div>
-      </div>
-      <div className="flex justify-end items-end ">
-        {isOpen ? (
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onClose?.();
-            }}
-            className="text-lg text-[#2E2E2E] relative hover:text-black transition"
-          >
-            <img
-              src="/arrow3.svg"
-              className=" cursor-pointer rotate-270 w-6 h-6"
-            />
-          </button>
-        ) : (
-          <img
-            src="/arrow3.svg"
-            className=" rotate-90 delay-1300 cursor-pointer w-6 h-6"
-          />
-        )}
-      </div>
-    </div>
-  );
+	return (
+		<div className="flex h-full w-full items-center justify-between md:z-50 md:bg-white">
+			<div className="flex items-end">
+				<img src="/icon.svg" className="h-8 w-8 object-contain pb-1 md:h-12 md:w-12 md:pb-2" />
+				<div className="pb-0 font-['Syne'] text-2xl text-[#50504F] md:pb-1 md:text-4xl">
+					<p>{text}</p>
+				</div>
+			</div>
+			<div className="flex items-end justify-end">
+				{isOpen ? (
+					<button
+						onClick={(e) => {
+							e.stopPropagation();
+							onClose?.();
+						}}
+						className="relative text-lg text-[#2E2E2E] transition hover:text-black"
+					>
+						<img src="/arrow3.svg" className="rotate-270 h-6 w-6 cursor-pointer" />
+					</button>
+				) : (
+					<img src="/arrow3.svg" className="delay-1300 h-6 w-6 rotate-90 cursor-pointer" />
+				)}
+			</div>
+		</div>
+	);
 }
