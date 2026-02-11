@@ -339,7 +339,7 @@ export function NavigationBar2() {
 	console.log(pathname);
 	const navItems = [
 		{ label: "STRONA GŁÓWNA", href: "/" },
-		{ label: "REORGANIZACJA", href: "/organizacja" },
+		{ label: "REORGANIZACJA", href: "/reorganizacja" },
 		{ label: "REARANŻACJA", href: "/rearanzacja" },
 		{ label: "REPROJEKT", href: "/reprojekt" },
 		{ label: "O NAS", href: "/onas" },

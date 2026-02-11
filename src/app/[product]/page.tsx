@@ -521,7 +521,7 @@ export function MobileNavBar() {
 		},
 		{
 			label: "Organizacja",
-			href: "/organizacja",
+			href: "/reorganizacja",
 			type: "re",
 		},
 		{
