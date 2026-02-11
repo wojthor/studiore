@@ -35,7 +35,7 @@ const offerings = [
 	},
 ];
 
-// --- DESKTOP (Zaktualizowana: Tytuł w stałym miejscu) ---
+
 export const ThreeColumnLandingDesktop = () => {
 	return (
 		<div

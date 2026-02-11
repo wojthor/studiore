@@ -45,7 +45,7 @@ export default function NavigationBarMobile() {
 				}`}
 			>
 				<div className="flex h-full w-full flex-col items-center justify-center gap-2 py-4">
-					<Link href="/organizacja" className="flex w-1/3 items-center justify-center gap-0.5">
+					<Link href="/reorganizacja" className="flex w-1/3 items-center justify-center gap-0.5">
 						<img src="/icon.svg" className="h-8 w-8 object-contain" />
 						<div className="pt-1.5 font-['Syne'] text-2xl text-[#50504F]">organizacja</div>
 					</Link>

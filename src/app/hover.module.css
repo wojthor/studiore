@@ -29,28 +29,7 @@
 	position: relative;
 	height: 50px;
 }
-.zakladkaInner {
-	position: absolute;
-	top: calc(50% - 25px);
-	left: 40px;
-	width: 116px;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: flex-start;
-}
-.zakladka {
-	position: absolute;
-	top: 0px;
-	left: calc(50% - 190.5px);
-	border-left: 1px solid #2e2e2e;
-	box-sizing: border-box;
-	width: 380.5px;
-	height: 140px;
-	overflow: hidden;
-	font-size: 40px;
-	color: #50504f;
-}
+
 .zwinIcon {
 	position: absolute;
 	top: 42px;
