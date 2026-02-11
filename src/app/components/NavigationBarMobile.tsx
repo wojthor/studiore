@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 
 export default function NavigationBarMobile() {
 	const [showUpperMenu, setShowUpperMenu] = useState(false);
@@ -44,18 +45,18 @@ export default function NavigationBarMobile() {
 				}`}
 			>
 				<div className="flex h-full w-full flex-col items-center justify-center gap-2 py-4">
-					<a href="/organizacja" className="flex w-1/3 items-center justify-center gap-0.5">
+					<Link href="/organizacja" className="flex w-1/3 items-center justify-center gap-0.5">
 						<img src="/icon.svg" className="h-8 w-8 object-contain" />
 						<div className="pt-1.5 font-['Syne'] text-2xl text-[#50504F]">organizacja</div>
-					</a>
-					<a href="/aranzacja" className="flex w-1/3 items-center justify-center gap-0.5">
+					</Link>
+					<Link href="/aranzacja" className="flex w-1/3 items-center justify-center gap-0.5">
 						<img src="/icon.svg" className="h-8 w-8 object-contain" />
 						<div className="pt-1.5 font-['Syne'] text-2xl text-[#50504F]">aranżacja</div>
-					</a>
-					<a href="/projekt" className="flex w-1/3 items-center justify-center gap-0.5">
+					</Link>
+					<Link href="/projekt" className="flex w-1/3 items-center justify-center gap-0.5">
 						<img src="/icon.svg" className="h-8 w-8 object-contain" />
 						<div className="pt-1.5 font-['Syne'] text-2xl text-[#50504F]">projekt</div>
-					</a>
+					</Link>
 				</div>
 			</div>
 		</div>

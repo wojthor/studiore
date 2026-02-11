@@ -85,7 +85,7 @@
 import React, { useRef, useState } from "react";
 import Link from "next/link";
 
-import { ChevronDown, Plus, Minus, ChevronRight, ChevronLeft } from "lucide-react";
+import { ChevronDown, Plus, Minus, ChevronLeft } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { Syne } from "next/font/google";
 
@@ -101,51 +101,10 @@ const images = {
 	person: "/restart.png",
 };
 
-export function NavigationBar2() {
-	const pathname = usePathname();
-
-	const navItems = [
-		{ label: "STRONA GŁÓWNA", href: "/" },
-		{ label: "REORGANIZACJA", href: "/organizacja" },
-		{ label: "REARANŻACJA", href: "/rearanzacja" },
-		{ label: "REPROJEKT", href: "/reprojekt" },
-		{ label: "O NAS", href: "/onas" },
-		{ label: "KONTAKT", href: "/kontakt" },
-	];
-
-	return (
-		<div className="pointer-events-none absolute left-0 top-6 z-50 w-full px-6 md:px-12">
-			<div className="pointer-events-auto relative h-16 w-full">
-				<div className="flex h-16 w-full items-center justify-center gap-8 md:gap-12">
-					{navItems.map((item) => {
-						const isActive = pathname === item.href;
-
-						return (
-							<Link
-								key={item.label}
-								href={item.href}
-								className={`whitespace-nowrap text-xs font-bold transition-all duration-500 md:text-sm ${
-									isActive
-										? "text-[#2E2E2E]"
-										: "text-[#2E2E2E] hover:tracking-widest hover:text-[#FF4A00]"
-								}`}
-							>
-								{item.label}
-
-								<div
-									className={`my-2 h-px w-full bg-[#2E2E2E] ${isActive ? "opacity-100 hover:w-full" : "opacity-0"}`}
-								></div>
-							</Link>
-						);
-					})}
-				</div>
-			</div>
-		</div>
-	);
-}
-
 import { useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
+
+import { NavigationBar2 } from "../components/ProductComponents/components";
 
 export function MobileNavigationBar() {
 	const [isOpen, setIsOpen] = useState(false);

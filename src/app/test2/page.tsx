@@ -3,6 +3,7 @@
 import React, { useRef } from "react";
 import { Plus, ChevronDown, ChevronUp } from "lucide-react";
 import { Syne } from "next/font/google";
+import Link from "next/link";
 
 const syneFont = Syne({
 	subsets: ["latin"],
@@ -81,11 +82,11 @@ export const ThreeColumnLandingDesktop = () => {
 
 						{/* PRZYCISK - Domyślnie ukryty */}
 						<div className="mt-8 flex translate-y-4 justify-end opacity-0 transition-all delay-75 duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-							<a href={offering.href}>
+							<Link href={offering.href}>
 								<button className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-600 backdrop-blur-md transition-all duration-300 hover:rotate-180 hover:bg-orange-700">
 									<Plus size={24} />
 								</button>
-							</a>
+							</Link>
 						</div>
 					</div>
 				</div>
@@ -94,18 +95,18 @@ export const ThreeColumnLandingDesktop = () => {
 			{/* Stopka Desktop */}
 			<div className="pointer-events-none absolute bottom-0 right-0 z-20 flex flex-row gap-12 p-12">
 				<div className="pointer-events-auto flex flex-row gap-12">
-					<a href="/kontakt" className="group flex flex-col items-end">
+					<Link href="/kontakt" className="group flex flex-col items-end">
 						<span className="mb-2 h-px w-[148px] bg-white shadow-none transition-all duration-500 group-hover:w-[160px] group-hover:bg-[#FF4A00] group-hover:shadow-[0_0_10px_#FF4A00]"></span>
 						<span className="text-xl font-light uppercase tracking-normal text-white transition-all duration-700 group-hover:tracking-widest group-hover:text-[#FF4A00]">
 							Kontakt
 						</span>
-					</a>
-					<a href="/onas" className="group flex flex-col items-end">
+					</Link>
+					<Link href="/onas" className="group flex flex-col items-end">
 						<span className="mb-2 h-px w-[148px] bg-white shadow-none transition-all duration-500 group-hover:w-[160px] group-hover:bg-[#FF4A00] group-hover:shadow-[0_0_10px_#FF4A00]"></span>
 						<span className="text-xl font-light uppercase tracking-normal text-white transition-all duration-700 group-hover:tracking-widest group-hover:text-[#FF4A00]">
 							O nas
 						</span>
-					</a>
+					</Link>
 				</div>
 			</div>
 			<div>
@@ -178,11 +179,11 @@ export const ThreeColumnLandingMobile = () => {
 							</p>
 
 							<div className="mb-4 mt-4 flex items-end justify-end">
-								<a href={offering.href}>
+								<Link href={offering.href}>
 									<div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#FF4A00] shadow-xl transition-transform hover:bg-orange-600 active:scale-95">
 										<Plus size={32} className="text-white" />
 									</div>
-								</a>
+								</Link>
 							</div>
 
 							{/* --- PRZYCISK W DÓŁ --- */}
@@ -221,18 +222,18 @@ export const ThreeColumnLandingMobile = () => {
 			{/* pointer-events-none na kontenerze pozwala przewijać palcem "przez" puste miejsca footera */}
 			<div className="pointer-events-none fixed bottom-0 left-0 z-50 w-full p-4">
 				<div className="pointer-events-auto flex items-end justify-between pt-4">
-					<a href="/kontakt" className="group flex flex-col gap-1">
+					<Link href="/kontakt" className="group flex flex-col gap-1">
 						<span className="w-25 mb-2 h-px bg-white"></span>
 						<span className="text-xs uppercase tracking-[0.2em] text-white transition-colors group-hover:text-[#FF4A00]">
 							Kontakt
 						</span>
-					</a>
-					<a href="/onas" className="group flex flex-col items-end gap-1">
+					</Link>
+					<Link href="/onas" className="group flex flex-col items-end gap-1">
 						<span className="w-25 mb-2 h-px bg-white"></span>
 						<span className="text-xs uppercase tracking-[0.2em] text-white transition-colors group-hover:text-[#FF4A00]">
 							O nas
 						</span>
-					</a>
+					</Link>
 				</div>
 			</div>
 		</div>

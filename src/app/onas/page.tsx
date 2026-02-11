@@ -1,8 +1,9 @@
 "use client";
 
 import { Syne } from "next/font/google";
-import { MobileNavigationBar, NavigationBar2 } from "../[product]/page";
+import { MobileNavigationBar } from "../[product]/page";
 import AboutUsHorizontal from "../components/AboutUsHover";
+import { NavigationBar2 } from "../components/ProductComponents/components";
 
 const syneFont = Syne({
 	subsets: ["latin"],

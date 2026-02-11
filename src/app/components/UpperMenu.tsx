@@ -14,19 +14,19 @@ export function UpperMenu() {
 				</div>
 			</Link>
 
-			<a href="/aranzacja" className="flex w-1/3 items-center justify-center">
+			<Link href="/aranzacja" className="flex w-1/3 items-center justify-center">
 				<img src="/icon.svg" className="h-8 w-8 object-contain pb-1 md:h-8 md:w-8" />
 				<div className="pb-2 font-['Syne'] text-2xl text-[#50504F] md:pt-2 md:text-2xl">
 					aranżacja
 				</div>
-			</a>
+			</Link>
 
-			<a href="/projekt" className="flex w-1/3 items-center justify-center">
+			<Link href="/projekt" className="flex w-1/3 items-center justify-center">
 				<img src="/icon.svg" className="h-8 w-8 object-contain pb-1 md:h-8 md:w-8" />
 				<div className="pb-2 font-['Syne'] text-2xl text-[#50504F] md:pt-2 md:text-2xl">
 					projekt
 				</div>
-			</a>
+			</Link>
 		</div>
 	);
 }

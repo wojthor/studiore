@@ -1,8 +1,9 @@
 "use client";
 import { useRef } from "react";
 import { ChevronDown } from "lucide-react";
-import { MobileNavigationBar, NavigationBar2 } from "../[product]/page";
+import { MobileNavigationBar } from "../[product]/page";
 import { Syne } from "next/font/google";
+import { NavigationBar2 } from "../components/ProductComponents/components";
 
 const syneFont = Syne({
 	subsets: ["latin"],
